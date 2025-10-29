@@ -96,18 +96,25 @@ with col_right:
             </div>
         """, unsafe_allow_html=True)
     else:
-        with st.spinner("AI sedang menganalisis makanan..."):
-            files = {"file": (uploaded.name, uploaded.getvalue(), uploaded.type)}
-            params = {"portion_g": 100}  # Ambil data per 100g dulu
-            # resp = requests.post("http://localhost:8000/predict", files=files, params=params)
-            resp = requests.post("https://detect-food-nutrient-backend-production.up.railway.app/predict", files=files, params=params)
-
-        if resp.status_code != 200:
-            st.error(f"❌ Backend error: {resp.text}")
-        else:
-            data = resp.json()
+        if 'last_uploaded_name' not in st.session_state or st.session_state.last_uploaded_name != uploaded.name:
+            st.session_state.last_uploaded_name = uploaded.name
             
-            # Hasil Prediksi
+            with st.spinner("AI sedang menganalisis makanan..."):
+                files = {"file": (uploaded.name, uploaded.getvalue(), uploaded.type)}
+                params = {"portion_g": 100}
+                resp = requests.post("https://detect-food-nutrient-backend-production.up.railway.app/predict", files=files, params=params)
+
+            if resp.status_code != 200:
+                st.error(f"❌ Backend error: {resp.text}")
+                st.session_state.prediction_data = None
+            else:
+                st.session_state.prediction_data = resp.json()
+        
+        if st.session_state.get('prediction_data') is None:
+            st.error("❌ Gagal mendapatkan prediksi")
+        else:
+            data = st.session_state.prediction_data
+            
             st.markdown("#### Makanan Terdeteksi")
             st.markdown(f'<div class="prediction-badge">{data["predicted_food"].upper()}</div>', unsafe_allow_html=True)
             st.progress(data['confidence'])
@@ -115,24 +122,20 @@ with col_right:
             
             st.markdown("---")
             
-            # Top 5 Prediksi
             with st.expander("Lihat Top-5 Prediksi Lainnya", expanded=False):
                 for i, (name, score) in enumerate(data["top5"], 1):
                     st.write(f"{i}. **{name}**: {score*100:.1f}%")
             
             st.markdown("---")
             
-            # Informasi Gizi
             if data["nutrition_per_100g"] is None:
                 st.warning("⚠️ Belum ada info gizi untuk makanan ini di database")
             else:
-                # Slider untuk porsi
                 portion = st.slider("Perkiraan porsi (gram):", min_value=50, max_value=800, value=250, step=10, key="portion_slider")
                 
                 st.markdown("#### Informasi Gizi")
                 st.caption(f"Per {portion}g porsi")
                 
-                # Hitung nutrisi berdasarkan porsi
                 per100 = data["nutrition_per_100g"]
                 ratio = portion / 100.0
                 
