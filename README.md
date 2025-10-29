@@ -51,6 +51,7 @@ Response JSON: nama makanan, confidence, top5, nutrisi per 100g dan per porsi.
 streamlit run frontend/app_frontend.py
 ```
 Frontend akan call backend di http://localhost:8000/predict
+https://detect-food-nutrient-backend-production.up.railway.app/
 
 ## 6. Estimasi nutrisi
 data/nutrition_db.csv punya kalori/protein/lemak/karbo per 100g untuk setiap kelas.

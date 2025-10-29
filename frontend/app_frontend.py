@@ -99,7 +99,8 @@ with col_right:
         with st.spinner("AI sedang menganalisis makanan..."):
             files = {"file": (uploaded.name, uploaded.getvalue(), uploaded.type)}
             params = {"portion_g": 100}  # Ambil data per 100g dulu
-            resp = requests.post("http://localhost:8000/predict", files=files, params=params)
+            # resp = requests.post("http://localhost:8000/predict", files=files, params=params)
+            resp = requests.post("https://detect-food-nutrient-backend-production.up.railway.app/predict", files=files, params=params)
 
         if resp.status_code != 200:
             st.error(f"❌ Backend error: {resp.text}")
