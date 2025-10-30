@@ -140,12 +140,16 @@ with col_right:
                 ratio = portion / 100.0
                 
                 col1, col2 = st.columns(2)
-                
+
                 with col1:
                     st.metric("Kalori", f"{per100['calories_kcal'] * ratio:.0f} kcal")
                     st.metric("Protein", f"{per100['protein_g'] * ratio:.1f} g")
-                
+                    st.metric("Serat (Fiber)", f"{per100.get('fiber_g', 0.0) * ratio:.1f} g")
+                    st.metric("Sodium", f"{per100.get('sodium_mg', 0.0) * ratio:.1f} mg")
+
                 with col2:
                     st.metric("Lemak", f"{per100['fat_g'] * ratio:.1f} g")
                     st.metric("Karbohidrat", f"{per100['carbs_g'] * ratio:.1f} g")
+                    st.metric("Gula (Sugar)", f"{per100.get('sugar_g', 0.0) * ratio:.1f} g")
+
     

@@ -37,6 +37,9 @@ class NutritionBlock(BaseModel):
     protein_g: float
     fat_g: float
     carbs_g: float
+    fiber_g: float
+    sugar_g: float
+    sodium_mg: float
 
 class PredictResponse(BaseModel):
     predicted_food: str
@@ -93,11 +96,17 @@ async def predict_food(
             protein_g=nutri100.protein,
             fat_g=nutri100.fat,
             carbs_g=nutri100.carbs,
+            fiber_g=nutri100.fiber,
+            sugar_g=nutri100.sugar,
+            sodium_mg=nutri100.sodium_mg,
         ),
         nutrition_for_portion_g=NutritionBlock(
             calories_kcal=per_portion["calories_kcal"],
             protein_g=per_portion["protein_g"],
             fat_g=per_portion["fat_g"],
             carbs_g=per_portion["carbs_g"],
+            fiber_g=per_portion.get("fiber_g", 0.0),
+            sugar_g=per_portion.get("sugar_g", 0.0),
+            sodium_mg=per_portion.get("sodium_mg", 0.0),
         ),
     )
