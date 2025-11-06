@@ -10,12 +10,12 @@ from src.nutrition import load_nutrition_db, get_nutrition_for, scale_per_servin
 DEVICE = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
 
 val_tfm = transforms.Compose([
-    transforms.Resize((224,224)),
-    transforms.CenterCrop(224),
+    transforms.Resize(299, interpolation=transforms.InterpolationMode.BICUBIC),
+    transforms.CenterCrop(260),
     transforms.ToTensor(),
     transforms.Normalize(
         mean=[0.485, 0.456, 0.406],
-        std =[0.229, 0.224, 0.225],
+        std=[0.229, 0.224, 0.225],
     ),
 ])
 
@@ -64,9 +64,12 @@ def main():
     per_serv = scale_per_serving(nut, args.portion)
     print(f"\nEstimasi gizi untuk porsi {args.portion} gram:")
     print(f"Kalori (kcal): {per_serv['calories_kcal']}")
-    print(f"Protein (g):  {per_serv['protein_g']}")
-    print(f"Lemak (g):    {per_serv['fat_g']}")
-    print(f"Karbo (g):    {per_serv['carbs_g']}")
+    print(f"Protein (g):   {per_serv['protein_g']}")
+    print(f"Lemak (g):     {per_serv['fat_g']}")
+    print(f"Karbo (g):     {per_serv['carbs_g']}")
+    print(f"Serat (g):     {per_serv['fiber_g']}")
+    print(f"Gula (g):      {per_serv['sugar_g']}")
+    print(f"Sodium (mg):   {per_serv['sodium_mg']}")
 
 if __name__ == "__main__":
     main()

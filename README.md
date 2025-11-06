@@ -52,7 +52,7 @@ Url Frontend https://food-nutrient-detector.streamlit.app/ #hosting via streamli
 streamlit run frontend/app_frontend.py
 ```
 Frontend akan call backend di http://localhost:8000/predict #local
-https://detect-food-nutrient-backend-production.up.railway.app/predict #hosting via railway (mungkin akan ter-shutdown dalam beberapa hari)
+https://detect-food-nutrient-backend-production-e5fd.up.railway.app/predict #hosting via railway (mungkin akan ter-shutdown dalam beberapa hari)
 
 ## 6. Estimasi nutrisi
 data/nutrition_db.csv punya kalori/protein/lemak/karbo per 100g untuk setiap kelas.

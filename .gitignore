@@ -48,6 +48,7 @@ env/
 # Data Files (raw dataset)
 data/raw/food-101/
 data/food_images/
+data/raw/
 
 # Temporary files
 *.log

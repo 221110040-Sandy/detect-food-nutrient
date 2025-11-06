@@ -15,12 +15,12 @@ NUTRITION_CSV = "data/nutrition_db.csv"
 DEVICE = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
 
 img_tfm = transforms.Compose([
-    transforms.Resize((224,224)),
-    transforms.CenterCrop(224),
+    transforms.Resize(299, interpolation=transforms.InterpolationMode.BICUBIC),
+    transforms.CenterCrop(260),
     transforms.ToTensor(),
     transforms.Normalize(
         mean=[0.485, 0.456, 0.406],
-        std =[0.229, 0.224, 0.225],
+        std=[0.229, 0.224, 0.225],
     ),
 ])
 
@@ -105,8 +105,8 @@ async def predict_food(
             protein_g=per_portion["protein_g"],
             fat_g=per_portion["fat_g"],
             carbs_g=per_portion["carbs_g"],
-            fiber_g=per_portion.get("fiber_g", 0.0),
-            sugar_g=per_portion.get("sugar_g", 0.0),
-            sodium_mg=per_portion.get("sodium_mg", 0.0),
+            fiber_g=per_portion["fiber_g"],
+            sugar_g=per_portion["sugar_g"],
+            sodium_mg=per_portion["sodium_mg"],
         ),
     )
