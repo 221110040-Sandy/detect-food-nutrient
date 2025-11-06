@@ -67,9 +67,11 @@ SUBSET_CLASSES = [
 TARGET_DIR = DATA_ROOT / "food_images"
 TRAIN_OUT = TARGET_DIR / "train"
 VAL_OUT   = TARGET_DIR / "val"
+TEST_OUT  = TARGET_DIR / "test"
 
-MAX_TRAIN_PER_CLASS = 600
-MAX_VAL_PER_CLASS   = 150
+MAX_TRAIN_PER_CLASS = 500
+MAX_VAL_PER_CLASS   = 100
+MAX_TEST_PER_CLASS  = 150 
 
 AUTO_CLEAN = False
 FOOD101_URL = "http://data.vision.ee.ethz.ch/cvl/food-101.tar.gz"
@@ -137,7 +139,8 @@ def copy_subset_images(dataset_root: Path,
                        test_map: dict[str, list[str]]):
     img_dir = dataset_root / "images"
 
-    for base in [TRAIN_OUT, VAL_OUT]:
+  
+    for base in [TRAIN_OUT, VAL_OUT, TEST_OUT]:
         base.mkdir(parents=True, exist_ok=True)
 
     for cls in SUBSET_CLASSES:
@@ -147,10 +150,11 @@ def copy_subset_images(dataset_root: Path,
 
         class_train_dir = TRAIN_OUT / cls
         class_val_dir   = VAL_OUT / cls
+        class_test_dir  = TEST_OUT / cls
         class_train_dir.mkdir(parents=True, exist_ok=True)
         class_val_dir.mkdir(parents=True, exist_ok=True)
+        class_test_dir.mkdir(parents=True, exist_ok=True)
 
-        # train
         train_list = train_map[cls]
         if MAX_TRAIN_PER_CLASS is not None:
             train_list = train_list[:MAX_TRAIN_PER_CLASS]
@@ -159,27 +163,38 @@ def copy_subset_images(dataset_root: Path,
         for img_name in train_list:
             src = img_dir / cls / img_name
             dst = class_train_dir / img_name
-            if not dst.exists():
+            if not dst.exists() and src.exists():
                 shutil.copy2(src, dst)
-            copied_train += 1
+                copied_train += 1
 
-        # val
-        val_list = test_map[cls]
-        if MAX_VAL_PER_CLASS is not None:
-            val_list = val_list[:MAX_VAL_PER_CLASS]
 
+        remaining_train = train_map[cls][MAX_TRAIN_PER_CLASS:]
+        val_list = remaining_train[:MAX_VAL_PER_CLASS] if remaining_train else []
+        
         copied_val = 0
         for img_name in val_list:
             src = img_dir / cls / img_name
             dst = class_val_dir / img_name
-            if not dst.exists():
+            if not dst.exists() and src.exists():
                 shutil.copy2(src, dst)
-            copied_val += 1
+                copied_val += 1
 
-        print(f"[+] {cls}: {copied_train} train, {copied_val} val")
+        test_list = test_map[cls]
+        if MAX_TEST_PER_CLASS is not None:
+            test_list = test_list[:MAX_TEST_PER_CLASS]
 
-    print("[✓] Subset (50 kelas) siap di:", TARGET_DIR)
-    print("Sekarang bisa training dengan DATA_DIR = 'data/food_images50'")
+        copied_test = 0
+        for img_name in test_list:
+            src = img_dir / cls / img_name
+            dst = class_test_dir / img_name
+            if not dst.exists() and src.exists():
+                shutil.copy2(src, dst)
+                copied_test += 1
+
+        print(f"[+] {cls}: {copied_train} train, {copied_val} val, {copied_test} test")
+
+
+    print("Sekarang bisa training dengan DATA_DIR = 'data/food_images'")
 
 
 def clean_big_files(dataset_root: Path):

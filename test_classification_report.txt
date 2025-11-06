@@ -1,0 +1,62 @@
+Final Test Set Classification Report
+Test Loss: 0.5261
+Top-1 Accuracy: 90.29%
+Top-5 Accuracy: 98.21%
+Macro-F1: 0.9026 | Weighted-F1: 0.9026
+================================================================================
+                         precision    recall  f1-score   support
+
+              apple_pie     0.8561    0.7533    0.8014       150
+         baby_back_ribs     0.9366    0.8867    0.9110       150
+               bibimbap     0.9481    0.9733    0.9605       150
+           caesar_salad     0.9236    0.9667    0.9446       150
+            carrot_cake     0.8125    0.8667    0.8387       150
+             cheesecake     0.8252    0.7867    0.8055       150
+          chicken_curry     0.8750    0.8400    0.8571       150
+          chicken_wings     0.9342    0.9467    0.9404       150
+         chocolate_cake     0.8562    0.8733    0.8647       150
+           clam_chowder     0.9521    0.9267    0.9392       150
+          club_sandwich     0.9441    0.9000    0.9215       150
+                 donuts     0.9392    0.9267    0.9329       150
+              dumplings     0.9608    0.9800    0.9703       150
+          eggs_benedict     0.9592    0.9400    0.9495       150
+           french_fries     0.9182    0.9733    0.9450       150
+             fried_rice     0.8903    0.9200    0.9049       150
+          frozen_yogurt     0.8706    0.9867    0.9250       150
+grilled_cheese_sandwich     0.8645    0.8933    0.8787       150
+         grilled_salmon     0.8456    0.8400    0.8428       150
+              hamburger     0.8671    0.9133    0.8896       150
+                hot_dog     0.9315    0.9067    0.9189       150
+              ice_cream     0.9127    0.7667    0.8333       150
+                lasagna     0.8562    0.9133    0.8839       150
+    macaroni_and_cheese     0.8293    0.9067    0.8662       150
+                 nachos     0.9013    0.9133    0.9073       150
+               omelette     0.8649    0.8533    0.8591       150
+            onion_rings     0.9600    0.9600    0.9600       150
+               pad_thai     0.9463    0.9400    0.9431       150
+                 paella     0.9310    0.9000    0.9153       150
+               pancakes     0.9521    0.9267    0.9392       150
+            panna_cotta     0.9034    0.8733    0.8881       150
+                    pho     0.9416    0.9667    0.9539       150
+                  pizza     0.9161    0.9467    0.9311       150
+              pork_chop     0.7785    0.8200    0.7987       150
+                  ramen     0.8917    0.9333    0.9121       150
+                ravioli     0.8425    0.8200    0.8311       150
+        red_velvet_cake     0.8936    0.8400    0.8660       150
+                risotto     0.8269    0.8600    0.8431       150
+                 samosa     0.9091    0.9333    0.9211       150
+                sashimi     0.9728    0.9533    0.9630       150
+    spaghetti_bolognese     0.9597    0.9533    0.9565       150
+    spaghetti_carbonara     0.9108    0.9533    0.9316       150
+           spring_rolls     0.9710    0.8933    0.9306       150
+                  steak     0.8593    0.7733    0.8140       150
+   strawberry_shortcake     0.9496    0.8800    0.9135       150
+                  sushi     0.9583    0.9200    0.9388       150
+                  tacos     0.8874    0.8933    0.8904       150
+               takoyaki     0.9539    0.9667    0.9603       150
+               tiramisu     0.8580    0.9267    0.8910       150
+                waffles     0.9351    0.9600    0.9474       150
+
+               accuracy                         0.9029      7500
+              macro avg     0.9037    0.9029    0.9026      7500
+           weighted avg     0.9037    0.9029    0.9026      7500
