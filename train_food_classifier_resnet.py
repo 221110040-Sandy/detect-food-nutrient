@@ -13,7 +13,7 @@ from src.dataset import get_loaders
 from src.model import build_model, save_checkpoint
 
 DATA_DIR = "data/food_images"
-SAVE_PATH = "food_classifier_dataminds.pt"
+SAVE_PATH = "food_classifier_resnet.pt"
 BATCH_SIZE = 16
 EPOCHS = 15
 LR = 3e-4
@@ -66,7 +66,7 @@ def validate(model, val_loader, device, label_smooth=0.0):
 
 def train():
     train_loader, val_loader, class_names = get_loaders(DATA_DIR, batch_size=BATCH_SIZE)
-    model = build_model(num_classes=len(class_names)).to(DEVICE)
+    model = build_model(num_classes=len(class_names), arch="resnet50").to(DEVICE)
 
     optimizer = AdamW(model.parameters(), lr=LR, weight_decay=WEIGHT_DECAY)
     criterion = nn.CrossEntropyLoss(label_smoothing=LABEL_SMOOTH)
@@ -91,7 +91,7 @@ def train():
         optimizer.zero_grad(set_to_none=True)
         use_mixup_now = USE_MIXUP and (epoch < FREEZE_MIXUP_EPOCH)
 
-        pbar = tqdm(train_loader, desc=f"Epoch {epoch+1}/{EPOCHS}")
+        pbar = tqdm(train_loader, desc=f"Epoch {epoch+1}/{EPOCHS} [ResNet50]")
         for step, (imgs, labels) in enumerate(pbar, start=1):
             imgs = imgs.to(DEVICE)
             labels = labels.to(DEVICE)
@@ -145,7 +145,7 @@ def train():
     if best_state is not None:
         model.load_state_dict(best_state)
 
-    save_checkpoint(SAVE_PATH, model, class_names, arch="efficientnet_b2")
+    save_checkpoint(SAVE_PATH, model, class_names, arch="resnet50")
     print(f"\n[✓] Training complete! Best val_top1={best_acc:.4f}")
     print(f"Model saved to {SAVE_PATH}")
     print("Classes:", class_names)

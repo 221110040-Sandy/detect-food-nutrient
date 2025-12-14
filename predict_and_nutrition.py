@@ -20,8 +20,8 @@ val_tfm = transforms.Compose([
 ])
 
 def load_trained_model(ckpt_path: str):
-    state_dict, class_names = load_checkpoint(ckpt_path, device=DEVICE)
-    model = build_model(num_classes=len(class_names))
+    state_dict, class_names, arch = load_checkpoint(ckpt_path, device=DEVICE)
+    model = build_model(num_classes=len(class_names), arch=arch)
     model.load_state_dict(state_dict)
     model = model.to(DEVICE)
     model.eval()
