@@ -207,7 +207,7 @@ def main():
         print("Evaluating:", name)
 
         state_dict, saved_classes, arch = load_checkpoint(ckpt_path, device)
-        model = build_model(num_classes=len(saved_classes), backbone=arch).to(device)
+        model = build_model(num_classes=len(saved_classes), arch=arch).to(device)
         model.load_state_dict(state_dict)
 
         idx_map = None
