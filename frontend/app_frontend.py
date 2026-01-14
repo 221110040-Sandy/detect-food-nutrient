@@ -6,7 +6,7 @@ st.set_page_config(page_title="DataMinds Nutrition Detector", page_icon="🍚", 
 
 # API Base URL
 # API_BASE = "https://detect-food-nutrient-backend-production-e5fd.up.railway.app"
-API_BASE = "http://localhost:8000"
+API_BASE = "https://detect-food-nutrient-production.up.railway.app/"
 
 # Custom CSS untuk styling yang lebih menarik
 st.markdown("""
