@@ -44,7 +44,6 @@ Endpoint:
   - query param: portion_g=<gram>
 
 Response JSON: nama makanan, confidence, top5, nutrisi per 100g dan per porsi.
-Url Frontend https://food-nutrient-detector.streamlit.app/ #hosting via streamlit.
 
 
 ## 5. Jalankan frontend (UI Streamlit)
@@ -52,7 +51,6 @@ Url Frontend https://food-nutrient-detector.streamlit.app/ #hosting via streamli
 streamlit run frontend/app_frontend.py
 ```
 Frontend akan call backend di http://localhost:8000/predict #local
-https://detect-food-nutrient-backend-production-e5fd.up.railway.app/predict #hosting via railway (mungkin akan ter-shutdown dalam beberapa hari)
 
 ## 6. Estimasi nutrisi
 data/nutrition_db.csv punya kalori/protein/lemak/karbo per 100g untuk setiap kelas.
